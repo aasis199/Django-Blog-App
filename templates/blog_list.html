@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  .post .card{
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+  }
+</style>
+<div class="row">
+    {% for post in posts %}
+  <div class="col-sm-12 col-md-6 col-lg-6">
+    <div class="card border-none">
+      <img src="{{post.img.url}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <ul class="post-meta" style="list-style-type: none; padding-left: 0px;">
+          <li><i class="fa fa-tag"></i><a>{{post.category}}</a></li>
+          <li><i class="fa fa-comment"></i><a>{{ post.comments.all.count }} Comments</a></li>
+          <li><i class="fa fa-user"></i><a>Post By {{post.author.first_name}}</a></li>
+          <li><i class="fa fa-clock-o"></i><a>{{post.post_date | date:'d F'}}</a></li>
+        </ul>
+        <a style="text-decoration:none; color:black" href="{% url 'blog-detail' post.slug %}"><h5 class="card-title">{{post.title}}</h5></a>
+        <p class="card-text">{{post.body | slice:':250' | safe}}</p>
+        <a href="{% url 'blog-detail' post.slug %}"><button type="button" class="btn btn-lg btn-dark">Read More</button></a>
+      </div>
+    </div>
+  </div>
+    {% endfor %}
+</div>
+{% endblock %}
