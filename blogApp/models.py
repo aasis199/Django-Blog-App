@@ -23,8 +23,9 @@ class Categories(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
-    title_tag = models.CharField(max_length=255, default='Blog Post')
-    slug = models.SlugField(max_length=255, null=True, blank=True)
+    title_tag = models.CharField(max_length=255, default='')
+    slug = models.SlugField(max_length=255)
+    excerpt = models.CharField(max_length=255, null=True, blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     img = models.ImageField(upload_to='blog', null=True)
     body = RichTextField(blank=False, null=True)

@@ -10,6 +10,10 @@ from django.http import HttpResponseNotFound, Http404
 
 class Home(ListView):
    model = Post
+   context_object_name = 'posts'
+   cats = Categories.objects.all()
+   ordering = ['-post_date']  
+   paginate_by = 14
    template_name = 'index.html'
 
 
@@ -59,6 +63,7 @@ def CategoryView(request, cats):
 
 class blogdetail(DetailView):
    model = Post
+   latestpost_list = Post.objects.all().order_by('-post_date')[:3]
    template_name = 'blog_detail.html'
 
    def get_context_data(self, *args, **kwargs):

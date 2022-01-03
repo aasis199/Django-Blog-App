@@ -1,8 +1,56 @@
 {% extends 'base.html' %}
 {% include 'nav.html'}
-
 {% block content %}
 
+<div class="container-fluid p-0">
+  <div class="slide">
+    {% for post in posts|slice:":1" %}
+    <div class="container">
+    <div class="d-lg-flex">
+      <div class="col-lg-5">
+        <div class="thumbnail me-lg-5 thumbnail mb-4 mb-lg-0" style="flex:0 0 440px;">
+          <img src="{{post.img.url}}" class="w-100">
+        </div>
+      </div>
 
+      <div class="col-lg-6 row justify-content-center align-self-center">
+        <div class="content me-lg-5 thumbnail mb-4 mb-lg-0 my-auto " >
+          <ul class="post-meta d-flex" style="font-weight: 500; padding-left: 0px;">
+            <li><a>{{post.category}}- </a></li>
+            <li><a>{{post.post_date | date:'d F'}}</a></li>
+          </ul>
+          <a style="text-decoration:none; color:black;" href="{% url 'blog-detail' post.slug %}"><h5 class="card-title"><strong>{{post.title}}</strong></h5></a>
+          <p class="card-text" style="font-size: 15px !important;">{{post.excerpt}}</p>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="row">
+            {% for post in posts %}
+          <div class="col-sm-12 col-md-4 col-lg-4">
+            <div class=" border-none">
+              <img src="{{post.img.url}}" class="card-img-top" alt="..." width="100%;"  style="border-radius: 10px;">
+              <div class="card-body p-0 py-4">
+                <ul class="post-meta d-flex" style="font-weight: 500; padding-left: 0px;">
+                  <li><a>{{post.category}} - </a></li>
+                  <li><a> {{post.post_date | date:'d F'}}</a></li>
+                </ul>
+                <a style="text-decoration:none; color:black;" href="{% url 'blog-detail' post.slug %}"><h5 class="card-title"><strong>{{post.title}}</strong></h5></a>
+                <p class="card-text" style="font-size: 15px !important;">{{post.excerpt}}...</p>
+                <a href="{% url 'blog-detail' post.slug %}"><button type="button" class="button">Read More</button></a>
+              </div>
+            </div>
+          </div>
+            {% endfor %}
+    </div>
 {% endblock %}
 {% include 'footer.html'}

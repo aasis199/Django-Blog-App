@@ -1,31 +1,40 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<!-- <div class="container-fluid">
-  <h1 style="color: black;">{{category.title}}</h1>
-  <img src="https://cdn.britannica.com/78/155378-050-838B4322/Himalayas-Nepal.jpg" class="img-fluid w-100">
+<!-- <div class="container-fluid p-0">
+  <h1 style="color: black;">{{post.category}}</h1>
+  <img src="/static/img/blog-banner-.jpg" class="img-fluid w-100">
 </div> -->
-<div class="row my-4 align-content-start flex-wrap">
-  {% for post in category_posts %}
 
-<div class="col-sm-12 col-md-6 col-lg-6">
-  <div class="card border-none">
-    <img src="{{post.img.url}}" class="w-100" alt="...">
-    <div class="card-body">
-      <ul class="post-meta" style="list-style-type: none; padding-left: 0px;">
-        <li><i class="fa fa-tag"></i><a>{{post.category}}</a></li>
-        <li><i class="fa fa-comment"></i><a>{{ post.comments.all.count }} Comments</a></li>
-        <li><i class="fa fa-user"></i><a>Post By {{post.author.first_name}}</a></li>
-        <li><i class="fa fa-clock-o"></i><a>{{post.post_date | date:'d F'}}</a></li>
-      </ul>
-      <a style="text-decoration:none; color:black" href="{% url 'blog-detail' post.slug %}"><h5 class="card-title">{{post.title}}</h5></a>
-      <p class="card-text">{{post.body | slice:':250' | safe}}</p>
-      <a href="{% url 'blog-detail' post.slug %}"><button type="button" class="btn btn-lg btn-dark">Read More</button></a>
-    </div>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 post">
+      <div class="row">
+        {% for post in category_posts %}
+        <div class="col-sm-12 col-md-6 col-lg-6">
+          <div class="card border-none">
+            <img src="{{post.img.url}}" class="w-100" alt="...">
+            <div class="card-body">
+              <ul class="post-meta" style="list-style-type: none; padding-left: 0px;">
+                <li><i class="fa fa-tag"></i><a>{{post.category}}</a></li>
+                <li><i class="fa fa-comment"></i><a>{{ post.comments.all.count }} Comments</a></li>
+                <li><i class="fa fa-user"></i><a>Post By {{post.author.first_name}}</a></li>
+                <li><i class="fa fa-clock-o"></i><a>{{post.post_date | date:'d F'}}</a></li>
+              </ul>
+              <a style="text-decoration:none; color:black" href="{% url 'blog-detail' post.slug %}"><h5 class="card-title">{{post.title}}</h5></a>
+              <p class="card-text">{{post.excerpt}}</p>
+              <a href="{% url 'blog-detail' post.slug %}"><button type="button" class="btn btn-lg btn-dark">Read More</button></a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
   </div>
+  {% include 'sidebar.html' %}
 </div>
-  {% endfor %}
-</div>
+
 
 <nav aria-label="...">
   <ul class="pagination">
@@ -46,5 +55,9 @@
     {% endif %}
   </ul>
 </nav>
+
+
+
+</div>
 
 {% endblock %}

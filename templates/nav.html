@@ -1,5 +1,9 @@
 {% load static %}
 <style>
+  .post .card{
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+  }
 .s-text1{
     font-size: 13px;
     color: #848484 !important;
@@ -10,62 +14,27 @@
     color: #848484 !important;
     text-decoration: none;
 }
-.topbar {
-  height: 45px;
-  background-color: #f5f5f5;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 .navbar-default{
-    height: 80px;
+    height: 70px;
     box-shadow: 3px 2px 4px #d4d4d4;
 }
+
 </style>
 <header>  
-    <div class="topbar">
-        <div class="topbar-social px-5">
-            <a href="" class="topbar-social-item fa fa-facebook mx-2 s-text2"></a>
-            <a href="" class="topbar-social-item fa fa-instagram mx-2 s-text2"></a>
-            <a href="" class="topbar-social-item fa fa-pinterest-p mx-2 s-text2"></a>
-            <a href="" class="topbar-social-item  mx-2"><i class="fa fa-map s-text2"></i></a>
-        </div>
 
-        <p class="my-2">New Blog Website in Nepal</p>
-
-        {% if user.is_authenticated %}
-        <div class="t px-5">
-              <a class="drop-item s-text1 mx-2" href="#">Create Post</a>
-              <a class="drop-item s-text1 mx-2" href="/logout">Log Out</a>
-          </div>
-        {% else %}
-        <div class="t px-5">
-            <a class="drop-item s-text1 mx-2" onclick="window.location.href='/login';">Login</a>
-            <a class="drop-item s-text1 mx-2" onclick="window.location.href='/register';" >Register</a>
-        </div>
-        {% endif %}
-    </div>
-
-
-
-    <nav class="navbar navbar-default navbar-expand-lg navbar-light">
+      <nav class="topnav navbar navbar-expand-lg navbar-default navbar-light bg-white mb-4">
         <div class="container">
-          <a class="navbar-brand" href="./"><b>DJANGO BLOG</b></a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <a class="nav-logo" href="/">Mundana</a>
+          <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-left: 30%;width:30%;justify-content: space-around;">
+          <div class="navbar-collapse collapse" id="navbarColor02" style="margin-left: 25%;width: 50%;justify-content: space-around;">
+            <ul class="navbar-nav mr-auto d-flex align-items-center justify-content-around w-50" >
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="#">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/blog_list.html/">Blog</a>
+                <a class="nav-link" href="/blog">Blog</a>
               </li> 
               
               <li class="nav-item">
@@ -74,16 +43,14 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">About</a>
               </li>
-              
-  
             </ul>
-            <form class="d-flex" style='margin-top:6px; margin-bottom:6px' action="{% url 'search' %}" method="GET">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q" value="{{request.GET.q}}">
-              <button class="btn btn-dark" type="submit">Search</button>
-            </form>
+            <ul class="navbar-nav ml-auto d-flex align-items-center">
+              <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+              </li>
+            </ul>
           </div>
         </div>
-      </nav>
-
+        </nav>
 	</header>
 	

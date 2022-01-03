@@ -2,8 +2,10 @@
 
 {% block title %}
 <title>Signup</title>
-{% endblock %}
+{% end\block %}
 {% block content %}
+<div class="container">
+    <div class="col-lg-8">
 <form class="mt-4" action="" method="POST">
     {% csrf_token %}
     <div class="form-group">
@@ -32,6 +34,8 @@
     </div>
     <button style='margin-top:20px' type="submit" class="btn btn-dark">Submit</button>
 </form>
+</div>
+</div>
 {% for message in messages %}
 	<h5 style="margin-top: 10px; color:red">{{message}}</h5>
 {% endfor %}

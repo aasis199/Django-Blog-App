@@ -13,15 +13,19 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from blogApp import urls
 from graphene_django.views import GraphQLView
 from blog.schema import schema
 from users import views as user_views
 
 urlpatterns = [
+    path('jet/', include('jet.urls', 'jet')), # Django JET URLS
+    path('jet/dashboard/', include(('jet.dashboard.urls', 'jet-dashboard'))),
     path('admin/', admin.site.urls),
     path('graphql/', GraphQLView.as_view(graphiql=True)),
     path('register/', user_views.register, name='register'),

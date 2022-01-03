@@ -5,43 +5,79 @@
 {% endblock %}
 {% block content %}
 
-<div class="card my-4 col-lg-12">
-  <img src="{{post.img.url}}" class="w-100" alt="">
-  <div class="card-body">
-   
-    <h5 class="card-title">{{post.title}}</h5>
-    <p class="card-text">{{post.body | safe}}</p>
-    <hr>
-    <ul class="post-meta" style="list-style-type: none; padding-left: 0px;">
-      <li><i class="fa fa-tag"></i><a>{{post.category}}</a></li>
-      <li><i class="fa fa-comment"></i><a>{{ post.comments.all.count }} Comments</a></li>
-      <li><i class="fa fa-user"></i><a>Post By {{post.author.first_name}}</a></li>
-      <li><i class="fa fa-clock-o"></i><a>{{post.post_date | date:'d F'}}</a></li>
-    </ul>
-  </div>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 post">
+      <div class="row">
+          <div class="card my-4 col-lg-12">
+            <h2 class="p-2 card-title">{{post.title}}</h5>
+
+            <img src="{{post.img.url}}" class="w-100" alt="">
+            <div class="card-body">
+             
+              <h5 class="card-title">{{post.title}}</h5>
+              <p class="card-text">{{post.body | safe}}</p>
+              <hr>
+              <ul class="post-meta" style="list-style-type: none; padding-left: 0px;">
+                <li><i class="fa fa-tag"></i><a>{{post.category}}</a></li>
+                <li><i class="fa fa-comment"></i><a>{{ post.comments.all.count }} Comments</a></li>
+                <li><i class="fa fa-user"></i><a>Post By {{post.author.first_name}}</a></li>
+                <li><i class="fa fa-clock-o"></i><a>{{post.post_date | date:'d F'}}</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          {% if not request.user.is_authenticated %}
+          <div class="alert alert-danger">To comment, first <a href="/login">log in</a> to your account</div>
+          {% endif %}
+          
+          {% if request.user.is_authenticated %}
+              <form action="{% url 'send_comment' post.slug %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="post_id" value="{{ post.id }}">
+                <textarea class="p-2" name="message" cols="100" rows="10"></textarea>
+                <button type="submit" class="btn btn-lg btn-dark">Add Comment</button>
+              </form>
+          {% endif %}
+          
+            {% for comment in post.comments.all %}
+            <div class="alert">
+              <h4>Commented by <strong>{{ comment.sender.first_name}}</strong></h4>
+              <p>Comment: <strong>{{ comment.message }}</strong></p>
+            </div>
+            {% empty %}
+            {% endfor %}
+        </div>
+        
+      </div>
+
+      
+      {% include 'sidebar.html' %}
 </div>
 
+      <div class="text-center my-5">
+        <h2 class="text-center">
+          Recent Posts
+        </h2>
+        <div class="d-flex">
+        {% for post in latestpost_list|slice:4 %}
+        <div class="col-sm-12 col-md-4 col-lg-4 p-3">
+          <div class=" border-none">
+            <img src="{{post.img.url}}" class="card-img-top" alt="..." width="100%;" height="250px;" style="border-radius: 10px;">
+            <div class="card-body p-0 py-4">
+              
+              <a style="text-decoration:none; color:black;" href="{% url 'blog-detail' post.slug %}"><h5 class="card-title"><strong>{{post.title}}</strong></h5></a>
+              <p class="card-text" style="font-size: 15px !important;">{{post.excerpt}}...</p>
+              <a href="{% url 'blog-detail' post.slug %}"><button type="button" class="button">Read More</button></a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+        </div>
+
+       
 
 
-{% if not request.user.is_authenticated %}
-<div class="alert alert-danger">To comment, first <a href="/login">log in</a> to your account</div>
-{% endif %}
-
-{% if request.user.is_authenticated %}
-    <form action="{% url 'send_comment' post.slug %}" method="POST">
-      {% csrf_token %}
-      <input type="hidden" name="post_id" value="{{ post.id }}">
-      <textarea class="p-2" name="message" cols="100" rows="10"></textarea>
-      <button type="submit" class="btn btn-lg btn-dark">Add Comment</button>
-    </form>
-{% endif %}
-
-  {% for comment in post.comments.all %}
-  <div class="alert">
-    <h4>Commented by <strong>{{ comment.sender.first_name}}</strong></h4>
-    <p>Comment: <strong>{{ comment.message }}</strong></p>
-  </div>
-  {% empty %}
-  {% endfor %}
 
 {% endblock %}
