@@ -17,3 +17,4 @@ sqlparse>=0.4.2
 text-unidecode==1.3
 django-jet
 gunicorn
+django_heroku
